@@ -1,3 +1,7 @@
+package Main;
+
+import Entity.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -48,7 +52,7 @@ public class Index {
                     }
                     while (!n.equals("A") && !n.equals("B") && !n.equals("C"));
                 }
-                //choose the product by calling method Products in class Choices
+                //choose the product by calling method Products in class Main.Choices
                 Product p = choice.Products(n);
                 if (p.getPrice() > notes) {
                     System.out.print("You don't have enough money. Do you want to top up? (Y/N): ");

@@ -1,3 +1,8 @@
+package Main;
+
+import Entity.Money;
+import Entity.Product;
+
 public class Choices {
 
     public double Notes(String choice) {
