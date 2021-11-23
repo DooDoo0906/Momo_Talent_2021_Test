@@ -11,10 +11,11 @@ public class Index {
     private static List<Product> product = new ArrayList<>();
     private static double budget = 50000;
     private static double minRate = 0.1;
-
+    private  static int Date=1;
     public static void main(String[] args) {
         String options = null;
         do {
+            System.out.println("\nDay: "+Date);
             chooseNotes();
             System.out.print("\n");
             choosePro();
@@ -24,7 +25,9 @@ public class Index {
         while (!options.equals("N"));
     }
 
-
+    /**
+     * This is for user to choose products
+     */
     private static void choosePro() {
         String n;
         Scanner sc = new Scanner(System.in);
@@ -74,7 +77,9 @@ public class Index {
         while (!n.equals("N"));
     }
 
-
+    /**
+     * This is for user to choose notes
+     */
     private static void chooseNotes() {
         Scanner sc = new Scanner(System.in);
         Choices choice = new Choices();
@@ -98,7 +103,9 @@ public class Index {
         while (!n.equals("N"));
     }
 
-
+    /**
+     * Promotion checked
+     */
     private static String checkPromotion(List<String> proName) {
         int count = 0;
         String[] name = proName.toArray(new String[0]);
@@ -115,6 +122,9 @@ public class Index {
         return "none";
     }
 
+    /**
+     * Validation when user enter "yes/no"
+     */
     private static String checkYesNo(String input) {
         Scanner sc = new Scanner(System.in);
         if (!input.equals("Y") && !input.equals("N")) {
@@ -127,6 +137,9 @@ public class Index {
         return input;
     }
 
+    /**
+     * Release products and check the prize
+     */
     private static String checkOut(String options) {
         Scanner sc = new Scanner(System.in);
         List<String> proName = new ArrayList<>();
@@ -156,14 +169,15 @@ public class Index {
                 } else {
 
                     System.out.println("\nYour change: " + notes);
+                    System.out.println("Budget: "+budget);
                     for (Product prod : product) {
                         proName.add(prod.getName());
                     }
                     String win = checkPromotion(proName);
                     if (budget != 0 && !win.equals("none")) {
-                        double rate = Math.random() * (1 - 0) + 0;
+                        double rate = Math.random() * (1) + 0;
                         //check the rate
-                        getGacha(rate, win);
+                        getPrize(rate, win);
                         reportProduct();
 
                         //reset for another day
@@ -174,6 +188,7 @@ public class Index {
                             System.out.print("Do you want to move to next day? (Y/N): ");
                             options = checkYesNo(sc.nextLine().toUpperCase());
                             minRate += minRate * 0.5;
+                            Date+=1;
                         } else options = "N";
 
                     } else {
@@ -184,12 +199,15 @@ public class Index {
 
             } catch (Exception e) {
                 isOkay = false;
-                System.out.print("Please enter the corect format: ");
+                System.out.print("Please enter the correct format: ");
             }
-        } while (isOkay != true);
+        } while (!isOkay);
         return options;
     }
 
+    /**
+     * Show purchased products
+     */
     private static void reportProduct() {
         int amountCoke = 0;
         int amountPepsi = 0;
@@ -212,15 +230,21 @@ public class Index {
     }
 
 
-    private static void getGacha(double rate, String win) {
+    /**
+     * Check if the user can get the prizes or not
+     */
+    private static void getPrize(double rate, String win) {
         if (0 <= rate && rate <= minRate) {
             System.out.println("Congratulation, you won one more " + win);
             for (Product prod : product) {
                 if (win.equalsIgnoreCase(prod.getName())) {
                     if (prod.getPrice() > budget) {
-                        prod.setName("Coke");
-                        prod.setPrice(10000);
-                        budget -= prod.getPrice();
+                        System.out.println("Sorry, we ran out of "+win+" you'll have another prize");
+                        Product pro= new Product();
+                        pro.setPrice(10000);
+                        pro.setName("Coke");
+                        product.add(pro);
+                        budget -= pro.getPrice();
                         break;
                     } else {
                         budget -= prod.getPrice();
