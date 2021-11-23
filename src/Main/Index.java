@@ -184,7 +184,7 @@ public class Index {
                     }
                     String win = checkPromotion(proName);
                     if (!win.equals("none")) {
-                        double rate = 0.1;
+                        double rate = Math.random()*(1)+0;
                         //check the rate
                         getPrize(rate, win);
                         reportProduct();
