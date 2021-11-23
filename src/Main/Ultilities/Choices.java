@@ -1,7 +1,7 @@
-package Main;
+package Main.Ultilities;
 
-import Entity.Money;
-import Entity.Product;
+import Main.Entity.Money;
+import Main.Entity.Product;
 
 public class Choices {
 

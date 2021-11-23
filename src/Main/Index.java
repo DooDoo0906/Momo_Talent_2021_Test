@@ -1,6 +1,7 @@
 package Main;
 
-import Entity.Product;
+import Main.Entity.Product;
+import Main.Ultilities.Choices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +12,12 @@ public class Index {
     private static List<Product> product = new ArrayList<>();
     private static double budget = 50000;
     private static double minRate = 0.1;
-    private  static int Date=1;
+    private static int Date = 1;
+
     public static void main(String[] args) {
         String options = null;
         do {
-            System.out.println("\nDay: "+Date);
+            System.out.println("\nDay: " + Date);
             chooseNotes();
             System.out.print("\n");
             choosePro();
@@ -55,7 +57,7 @@ public class Index {
                     }
                     while (!n.equals("A") && !n.equals("B") && !n.equals("C"));
                 }
-                //choose the product by calling method Products in class Main.Choices
+                //choose the product by calling method Products in class Main.Ultilities.Choices
                 Product p = choice.Products(n);
                 if (p.getPrice() > notes) {
                     System.out.print("You don't have enough money. Do you want to top up? (Y/N): ");
@@ -151,6 +153,7 @@ public class Index {
         System.out.print("Your choice: ");
         do {
             try {
+
                 n = Integer.parseInt(sc.nextLine());
                 if (n != 1 && n != 2) {
                     do {
@@ -164,18 +167,24 @@ public class Index {
                     for (Product p : product) {
                         notes += p.getPrice();
                     }
-                    System.out.print("Your refund: " + notes);
-                    options = "N";
-                } else {
+                    System.out.println("Thanks for using our service");
+                    System.out.println("Your refund: " + notes);
+                    System.out.print("Do you want to move to next day? (Y/N): ");
+                    options = checkYesNo(sc.nextLine().toUpperCase());
+                    budget = 50000;
+                    Date += 1;
+                    notes = 0;
 
-                    System.out.println("\nYour change: " + notes);
-                    System.out.println("Budget: "+budget);
+                } else {
+                    System.out.println("\nThanks for using our service");
+                    System.out.println("Your change: " + notes);
+                    System.out.println("Budget: " + budget);
                     for (Product prod : product) {
                         proName.add(prod.getName());
                     }
                     String win = checkPromotion(proName);
-                    if (budget != 0 && !win.equals("none")) {
-                        double rate = Math.random() * (1) + 0;
+                    if (!win.equals("none")) {
+                        double rate = 0.1;
                         //check the rate
                         getPrize(rate, win);
                         reportProduct();
@@ -187,13 +196,24 @@ public class Index {
                         if (budget != 0) {
                             System.out.print("Do you want to move to next day? (Y/N): ");
                             options = checkYesNo(sc.nextLine().toUpperCase());
+                            budget = 50000;
                             minRate += minRate * 0.5;
-                            Date+=1;
-                        } else options = "N";
+                            Date += 1;
+                        } else {
+                            System.out.print("Do you want to move to next day? (Y/N): ");
+                            options = checkYesNo(sc.nextLine().toUpperCase());
+                            budget = 50000;
+                            Date += 1;
+                        }
 
                     } else {
-                        options = "N";
                         reportProduct();
+                        System.out.print("Do you want to move to next day? (Y/N): ");
+                        options = checkYesNo(sc.nextLine().toUpperCase());
+                        budget = 50000;
+                        Date += 1;
+                        notes = 0;
+
                     }
                 }
 
@@ -239,8 +259,8 @@ public class Index {
             for (Product prod : product) {
                 if (win.equalsIgnoreCase(prod.getName())) {
                     if (prod.getPrice() > budget) {
-                        System.out.println("Sorry, we ran out of "+win+" you'll have another prize");
-                        Product pro= new Product();
+                        System.out.println("Sorry, we ran out of " + win + " you'll have another prize");
+                        Product pro = new Product();
                         pro.setPrice(10000);
                         pro.setName("Coke");
                         product.add(pro);

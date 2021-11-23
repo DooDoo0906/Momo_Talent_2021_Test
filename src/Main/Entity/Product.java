@@ -1,4 +1,4 @@
-package Entity;
+package Main.Entity;
 
 public class Product {
     private String name;

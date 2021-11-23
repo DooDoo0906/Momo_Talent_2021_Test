@@ -1,4 +1,4 @@
-package Entity;
+package Main.Entity;
 
 public class Money {
     private double MoneyIn;
